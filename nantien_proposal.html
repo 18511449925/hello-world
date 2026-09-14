@@ -1,0 +1,668 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#F1E8D6">
+<title>南天寺數位弘法與寺務效率化提案</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#332A1E;
+    --ink-soft:#5B4F3D;
+    --paper:#F1E8D6;
+    --paper-deep:#E8DCC1;
+    --card:#FBF6EA;
+    --red:#7A342E;
+    --red-deep:#5E2622;
+    --gold:#B8862B;
+    --gold-soft:#D9BB78;
+    --line:#D8C9A2;
+    --maxw: 760px;
+  }
+
+  *{box-sizing:border-box;}
+  html{
+    scroll-behavior:smooth;
+    scroll-padding-top: 4.5rem;
+    -webkit-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  html, body{background:var(--paper);}
+
+  body{
+    margin:0;
+    color:var(--ink);
+    font-family:'Noto Sans TC', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size:17px;
+    line-height:1.85;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+  }
+
+  h1,h2,h3{
+    font-family:'Noto Serif TC', serif;
+    font-weight:700;
+    color:var(--ink);
+    line-height:1.4;
+    margin:0;
+  }
+
+  a{color:var(--red);}
+  a, button{-webkit-tap-highlight-color: transparent;}
+  a:focus-visible, button:focus-visible{outline:3px solid var(--gold); outline-offset:2px;}
+
+  /* ---------- 頂部導覽 ---------- */
+  .topbar{
+    position:sticky; top:0; z-index:20;
+    background:rgba(241,232,214,0.94);
+    backdrop-filter:blur(10px);
+    -webkit-backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+    padding-top: env(safe-area-inset-top);
+  }
+  .topbar-inner{
+    max-width:960px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between;
+    padding:14px 20px;
+    gap:12px;
+  }
+  .brand{
+    font-family:'Noto Serif TC',serif;
+    font-weight:600;
+    font-size:16px;
+    color:var(--red-deep);
+    white-space:nowrap;
+  }
+  .nav-wrap{
+    min-width:0;
+    flex:1;
+    display:flex;
+    justify-content:flex-end;
+  }
+  .nav-scroll{
+    display:flex; gap:6px; overflow-x:auto;
+    scrollbar-width:none;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    max-width:100%;
+  }
+  .nav-scroll::-webkit-scrollbar{display:none;}
+  .nav-scroll a{
+    flex:0 0 auto;
+    text-decoration:none;
+    color:var(--ink-soft);
+    font-size:15px;
+    padding:8px 12px;
+    border-radius:999px;
+    white-space:nowrap;
+  }
+  .nav-scroll a:hover,
+  .nav-scroll a:active{background:var(--paper-deep); color:var(--red-deep);}
+
+  /* ---------- Hero ---------- */
+  .hero{
+    max-width:760px; margin:0 auto;
+    padding:64px 24px 48px;
+    text-align:center;
+  }
+  .hero-eyebrow{
+    font-size:15px; color:var(--red); margin:0 0 14px;
+    font-family:'Noto Serif TC',serif;
+  }
+  .hero h1{
+    font-size:clamp(28px,4.4vw,42px);
+    letter-spacing:.02em;
+  }
+  .hero p.lead{
+    margin:18px auto 0;
+    font-size:18px;
+    color:var(--ink-soft);
+    max-width:42ch;
+  }
+
+  /* ---------- Section 通用 ---------- */
+  section{
+    max-width:var(--maxw); margin:0 auto;
+    padding:52px 24px;
+    scroll-margin-top: 5rem;
+  }
+  section + section{
+    border-top:1px solid var(--line);
+  }
+  .section-head{
+    display:flex; align-items:baseline; gap:14px;
+    margin-bottom:28px;
+  }
+  .section-num{
+    font-family:'Noto Serif TC',serif;
+    color:var(--gold);
+    font-size:15px;
+    border:1px solid var(--gold-soft);
+    border-radius:999px;
+    width:30px; height:30px;
+    display:flex; align-items:center; justify-content:center;
+    flex:0 0 auto;
+  }
+  h2{font-size:24px;}
+  h2 .sub{
+    display:block;
+    font-family:'Noto Sans TC',sans-serif;
+    font-weight:400;
+    font-size:14px;
+    color:var(--ink-soft);
+    margin-top:4px;
+  }
+
+  .quote{
+    border-left:3px solid var(--red);
+    padding:4px 0 4px 20px;
+    margin:24px 0;
+    font-family:'Noto Serif TC',serif;
+    font-size:18px;
+    color:var(--red-deep);
+    line-height:1.9;
+    text-align:left;
+    text-wrap:pretty;
+  }
+  .quote-attr{
+    display:block;
+    margin-top:10px;
+    font-size:15px;
+    color:var(--ink-soft);
+  }
+
+  .note{
+    background:var(--card);
+    border:1px solid var(--gold-soft);
+    border-left:3px solid var(--gold);
+    padding:18px 20px;
+    margin-top:20px;
+    font-size:15.5px;
+    color:var(--ink-soft);
+  }
+  .note strong{color:var(--red-deep); font-weight:600;}
+
+  p{margin:0 0 16px; color:var(--ink-soft);}
+  p:last-child{margin-bottom:0;}
+
+  ol.pain{
+    margin:0; padding:0; list-style:none;
+    counter-reset:pain;
+  }
+  ol.pain li{
+    counter-increment:pain;
+    display:flex; gap:14px;
+    padding:14px 0;
+    border-bottom:1px dashed var(--line);
+  }
+  ol.pain li:last-child{border-bottom:none;}
+  ol.pain li::before{
+    content:counter(pain);
+    font-family:'Noto Serif TC',serif;
+    color:var(--red);
+    font-size:15px;
+    flex:0 0 auto;
+  }
+
+  /* ---------- 設計準則 卡片 ---------- */
+  .principle-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:14px;
+  }
+  .principle{
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:20px 18px;
+  }
+  .principle h3{
+    font-size:16px; margin-bottom:8px; color:var(--red-deep);
+  }
+  .principle p{font-size:15px; margin:0; color:var(--ink-soft);}
+
+  /* ---------- 方案卡片 ---------- */
+  .plan-intro{margin-bottom:24px;}
+  .plan-card{
+    background:var(--card);
+    border:1px solid var(--line);
+    padding:22px 22px;
+    margin-bottom:16px;
+  }
+  .plan-card:last-child{margin-bottom:0;}
+  .plan-card h3{
+    font-size:17px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .plan-card h3::before{
+    content:'';
+    width:8px; height:8px;
+    border-radius:50%;
+    background:var(--gold);
+    flex:0 0 auto;
+  }
+  .plan-meta{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:6px 14px;
+    margin-top:14px;
+    font-size:15px;
+  }
+  .plan-meta dt{color:var(--red); white-space:nowrap;}
+  .plan-meta dd{margin:0; color:var(--ink-soft);}
+
+  /* ---------- 時間軸 ---------- */
+  .timeline{
+    position:relative;
+    padding-left:30px;
+  }
+  .timeline::before{
+    content:'';
+    position:absolute; left:9px; top:6px; bottom:6px;
+    width:1px; background:var(--line);
+  }
+  .tl-item{position:relative; padding-bottom:34px;}
+  .tl-item:last-child{padding-bottom:0;}
+  .tl-item::before{
+    content:'';
+    position:absolute; left:-30px; top:4px;
+    width:19px; height:19px; border-radius:50%;
+    background:var(--paper); border:2px solid var(--gold);
+  }
+  .tl-item h3{font-size:16px; margin-bottom:6px;}
+  .tl-item .when{
+    font-size:14px; color:var(--red); margin-bottom:8px; display:block;
+  }
+  .tl-item p{font-size:15px; margin-bottom:6px;}
+  .tl-item ul{margin:8px 0 0; padding-left:20px; color:var(--ink-soft); font-size:15px;}
+  .tl-item ul li{margin-bottom:4px;}
+
+  .benefit-grid{
+    display:grid; gap:12px;
+    margin:0; padding:0;
+  }
+  .benefit-grid li{
+    background:var(--card);
+    border-left:3px solid var(--gold);
+    padding:14px 16px;
+    font-size:15.5px;
+    color:var(--ink-soft);
+    list-style:none;
+  }
+
+  footer{
+    max-width:var(--maxw); margin:0 auto;
+    padding:40px 24px 70px;
+    color:var(--ink-soft);
+    font-size:14px;
+    border-top:1px solid var(--line);
+  }
+
+  @media (max-width:720px){
+    html{scroll-padding-top: 7.25rem;}
+    body{font-size:16px; line-height:1.75;}
+
+    .topbar-inner{
+      flex-direction:column;
+      align-items:stretch;
+      padding:10px 0 8px;
+      gap:2px;
+    }
+    .brand{
+      padding:2px 20px 4px;
+      font-size:15px;
+      letter-spacing:.04em;
+    }
+    .nav-wrap{
+      justify-content:stretch;
+      width:100%;
+    }
+    .nav-scroll{
+      padding:0 16px 4px;
+      gap:2px;
+      -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 20px), transparent);
+      mask-image: linear-gradient(90deg, transparent 0, #000 16px, #000 calc(100% - 20px), transparent);
+    }
+    .nav-scroll a{
+      font-size:14px;
+      min-height:40px;
+      display:inline-flex;
+      align-items:center;
+      padding:8px 12px;
+    }
+
+    .hero{
+      padding:32px 20px 20px;
+      text-align:left;
+    }
+    .hero-eyebrow{font-size:13px; margin-bottom:10px;}
+    .hero h1{
+      font-size:clamp(24px, 7.2vw, 32px);
+      letter-spacing:.01em;
+      line-height:1.35;
+    }
+    .hero p.lead{
+      margin:14px 0 0;
+      font-size:16px;
+      max-width:none;
+    }
+
+    section{
+      padding:36px 20px;
+      scroll-margin-top: 7.5rem;
+    }
+    .section-head{
+      align-items:flex-start;
+      gap:12px;
+      margin-bottom:20px;
+    }
+    h2{font-size:21px;}
+    h2 .sub{font-size:13px;}
+
+    .quote{
+      font-size:16px;
+      padding-left:14px;
+      margin:18px 0 20px;
+      line-height:1.75;
+    }
+    .quote-attr{font-size:13px;}
+
+    .note{
+      padding:14px 14px 14px 16px;
+      font-size:14.5px;
+      line-height:1.75;
+    }
+
+    .principle-grid{
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+    .principle{padding:16px;}
+
+    .plan-intro{margin-bottom:18px; font-size:15px;}
+    .plan-card{
+      padding:18px 16px;
+      margin-bottom:12px;
+    }
+    .plan-card h3{
+      font-size:16px;
+      align-items:flex-start;
+    }
+    .plan-card h3::before{margin-top:8px;}
+    .plan-card p{font-size:15px;}
+    .plan-meta{
+      grid-template-columns:1fr;
+      gap:2px 0;
+      margin-top:12px;
+      font-size:14px;
+    }
+    .plan-meta dt{
+      margin-top:8px;
+      font-size:13px;
+      letter-spacing:.04em;
+    }
+    .plan-meta dt:first-child{margin-top:0;}
+
+    ol.pain li{padding:12px 0; gap:12px; font-size:15px;}
+
+    .timeline{padding-left:26px;}
+    .tl-item{padding-bottom:26px;}
+    .tl-item::before{left:-26px; width:16px; height:16px;}
+    .timeline::before{left:7px;}
+    .tl-item h3{font-size:15px;}
+    .tl-item ul{padding-left:18px; font-size:14.5px;}
+
+    .benefit-grid li{font-size:15px; padding:14px;}
+
+    footer{
+      padding:28px 20px calc(40px + env(safe-area-inset-bottom));
+      font-size:13px;
+      line-height:1.7;
+    }
+  }
+
+  @media (max-width:380px){
+    .hero, section, footer{padding-left:16px; padding-right:16px;}
+    .brand{padding-left:16px; padding-right:16px;}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <div class="brand">南天寺提案</div>
+    <div class="nav-wrap">
+      <nav class="nav-scroll">
+        <a href="#intro">緣起</a>
+        <a href="#pain">現狀</a>
+        <a href="#principle">準則</a>
+        <a href="#plan">弘法</a>
+        <a href="#plan2">寺務</a>
+        <a href="#timeline">時程</a>
+        <a href="#benefit">效益</a>
+      </nav>
+    </div>
+  </div>
+</div>
+
+<div class="hero">
+  <p class="hero-eyebrow">初稿 · 供法師參閱指正</p>
+  <h1>南天寺數位弘法<br>與寺務效率化提案</h1>
+  <p class="lead">以科技為工具，讓弘法更深入人心，讓法師有更多時間與大眾結緣。</p>
+</div>
+
+<section id="intro">
+  <div class="section-head">
+    <span class="section-num">一</span>
+    <h2>緣起與目的</h2>
+  </div>
+  <p class="quote">「以文化弘揚佛法，以教育培養人才，以慈善福利社會，以共修淨化人心。」<br>「給人信心，給人歡喜，給人希望，給人方便。」<span class="quote-attr">——星雲大師</span></p>
+  <p>本提案希望以資訊科技為工具，協助南天寺：</p>
+  <p>讓文化教育的弘法效果更深入人心，尤其面對多元語言背景的遊客與信眾；讓寺務行政更有效率，減輕法師在重複性文書工作上的負擔；讓法師、職事有更多時間心力投入與大眾結緣、說法度眾。</p>
+  <p>科技始終是輔助，一切設計仍以「弘法為本、以人為本」為原則，不喧賓奪主。</p>
+</section>
+
+<section id="pain">
+  <div class="section-head">
+    <span class="section-num">二</span>
+    <h2>現狀與痛點</h2>
+  </div>
+  <ol class="pain">
+    <li>遊客、信眾了解佛法、佛菩薩淵源多依賴現場講解或紙本簡介，缺乏系統化、多語言的自助學習方式</li>
+    <li>參訪、法會、供燈等高峰時段容易擁擠，缺乏預約分流機制</li>
+    <li>法會報名、牌位登記、場地借用等仍多為紙本或人工作業，耗費法師與職事時間</li>
+    <li>義工、信眾、職工角色多元，管理與培訓方式尚未系統化，人才養成缺乏明確路徑</li>
+  </ol>
+</section>
+
+<section id="principle">
+  <div class="section-head">
+    <span class="section-num">三</span>
+    <h2>設計準則<span class="sub">所有方案都遵循以下原則</span></h2>
+  </div>
+  <p>寺院不同於一般商業機構，使用者涵蓋各年齡層、各種科技熟悉程度的師兄師姐，因此任何方案在評估時都優先考慮：</p>
+  <div class="principle-grid">
+    <div class="principle"><h3>低成本</h3><p>優先選用免費或低費用的成熟工具，避免一開始就投入昂貴的客製開發</p></div>
+    <div class="principle"><h3>高性價比</h3><p>每項功能先問能省多少法師的時間、能提升多少信眾體驗，投入產出比不划算的先不做</p></div>
+    <div class="principle"><h3>低維護</h3><p>優先選擇不需要專人常駐維護的方案，操作說明力求簡單，減少技術依賴</p></div>
+    <div class="principle"><h3>老少咸宜</h3><p>介面字體夠大、步驟夠少，保留人工與現場協助管道，線上線下並行，不強迫任何人</p></div>
+    <div class="principle"><h3>循序漸進</h3><p>不追求一步到位，允許方案隨使用回饋慢慢調整、慢慢長大</p></div>
+    <div class="principle"><h3>系統相容</h3><p>優先考慮能與寺方既有的系統、工具銜接整合，避免另起爐灶、造成資料分散</p></div>
+  </div>
+  <div class="note"><strong>關於體驗與效率：</strong>數位化是趨勢，但寺院終究是一個更重視「體驗」而非單純講求「效率」的地方。前來清淨修行的信眾，需要的是安頓身心的空間，而不只是快速便利。因此所有方案都會保留相應的線下體驗，例如供燈、上香、法會共修仍以現場參與為主，線上功能只是輔助與延伸，而非取代。</div>
+</section>
+
+<section id="plan">
+  <div class="section-head">
+    <span class="section-num">四</span>
+    <h2>方案：教育弘法方向<span class="sub">智慧南天</span></h2>
+  </div>
+
+  <p class="plan-intro">澳洲是一個多民族、多宗教背景的國家，來自印度、尼泊爾、不丹、越南、柬埔寨、泰國等地的信眾都各有自己的佛教傳統，隨著佛教在當地本土化的發展，彼此在儀軌、風格上已有所差異。我們希望在互相理解與尊重不同傳統的基礎上，讓大眾也能對南天寺所傳承的人間佛教與佛光山文化留下清晰的印象，這是本方向設計時特別留意的重點。</p>
+
+  <div class="plan-card">
+    <h3>多語言智慧導覽</h3>
+    <p>網頁或小程式掃碼導覽，語音加圖文介紹佛菩薩、殿堂典故，含大悲殿。</p>
+    <dl class="plan-meta">
+      <dt>解決痛點</dt><dd>遊客理解門檻、語言隔閡</dd>
+      <dt>成本考量</dt><dd>用現成導覽平台範本起步，內容由寺方審定後錄入，無需自建App</dd>
+    </dl>
+  </div>
+
+  <div class="plan-card">
+    <h3>佛法問答助手</h3>
+    <p>基於寺方認可的教材內容，回答遊客與信眾的常見提問。</p>
+    <dl class="plan-meta">
+      <dt>解決痛點</dt><dd>現場講解人力有限</dd>
+      <dt>成本考量</dt><dd>初期先做文字版常見問題，不急著上AI，內容穩定後再升級</dd>
+    </dl>
+  </div>
+
+  <div class="plan-card">
+    <h3>線上學佛資源庫</h3>
+    <p>講座錄影、共修課程、法會介紹分類歸檔、方便檢索。</p>
+    <dl class="plan-meta">
+      <dt>解決痛點</dt><dd>信眾持續學習不便</dd>
+      <dt>成本考量</dt><dd>可用YouTube加簡單網頁分類呈現，幾乎零成本</dd>
+    </dl>
+  </div>
+
+  <div class="plan-card">
+    <h3>數位典藏</h3>
+    <p>寺誌、開示、影像資料數位化保存。</p>
+    <dl class="plan-meta">
+      <dt>解決痛點</dt><dd>文化傳承與史料保存</dd>
+      <dt>成本考量</dt><dd>長期、不急迫的項目，可分批、隨手做</dd>
+    </dl>
+  </div>
+</section>
+
+<section id="plan2">
+  <div class="section-head">
+    <span class="section-num">五</span>
+    <h2>方案：寺院事務管理方向<span class="sub">讓法師專注弘法</span></h2>
+  </div>
+
+  <div class="plan-card">
+    <h3>參訪 / 法會預約與錯峰</h3>
+    <p>線上預約分時段，減少現場壅塞。</p>
+    <dl class="plan-meta">
+      <dt>解決痛點</dt><dd>高峰管理、動線安排</dd>
+      <dt>成本考量</dt><dd>用現成表單或預約工具起步，保留現場登記作為備用</dd>
+    </dl>
+  </div>
+
+  <div class="plan-card">
+    <h3>供燈 / 牌位 / 法會線上登記</h3>
+    <p>表單電子化，自動歸檔。</p>
+    <dl class="plan-meta">
+      <dt>解決痛點</dt><dd>紙本作業、人工登記耗時</dd>
+      <dt>成本考量</dt><dd>用簡單表單工具即可，重點在減少法師謄寫核對的時間</dd>
+    </dl>
+  </div>
+
+  <div class="plan-card">
+    <h3>義工與信眾管理</h3>
+    <p>依發心、專長、服務時段差異化排班，記錄培訓與成長路徑。</p>
+    <dl class="plan-meta">
+      <dt>解決痛點</dt><dd>人才培養、義工調度</dd>
+      <dt>成本考量</dt><dd>先從一份共享表格開始記錄，視規模再考慮專門系統</dd>
+    </dl>
+  </div>
+
+  <div class="plan-card">
+    <h3>法師端簡易看板</h3>
+    <p>整合呈現當日人流量、義工排班、職工排班、待處理事項、物品與庫房管理等資訊，一頁掌握寺務全貌。</p>
+    <dl class="plan-meta">
+      <dt>解決痛點</dt><dd>寺務資訊分散，掌握全貌不需懂技術</dd>
+      <dt>成本考量</dt><dd>用現成表格或看板工具的免費版即可滿足初期需求</dd>
+    </dl>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="section-head">
+    <span class="section-num">六</span>
+    <h2>分階段實施建議<span class="sub">尊重寺院自身節奏，長期推進</span></h2>
+  </div>
+  <p>寺院做事講究因緣俱足、不急不躁，本提案刻意拆得細一些，每個小階段都留出讓法師、義工消化適應的時間，也方便隨時調整。</p>
+
+  <div class="timeline">
+    <div class="tl-item">
+      <h3>階段〇　共識與準備</h3>
+      <span class="when">約1個月</span>
+      <ul>
+        <li>與法師、職事座談，確認最迫切的一到兩個痛點</li>
+        <li>確認教義內容審定的負責法師或窗口</li>
+        <li>盤點現有資料，無需重新創作</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>階段一　單點試行</h3>
+      <span class="when">約2–3個月</span>
+      <ul>
+        <li>只做一項最小可行方案</li>
+        <li>小範圍給部分義工、信眾試用，收集回饋</li>
+        <li>觀察年長師兄師姐使用是否順暢，是否需保留人工協助</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>階段二　調整與鞏固</h3>
+      <span class="when">約2–3個月</span>
+      <ul>
+        <li>依回饋調整內容與操作方式，簡化讓長者感到困難的步驟</li>
+        <li>正式公告使用，紙本、人工方式並行一段時間，不強制切換</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>階段三　小幅擴展</h3>
+      <span class="when">約3–6個月</span>
+      <ul>
+        <li>第一項方案穩定後，再啟動第二個痛點的方案</li>
+        <li>每次只新增一項，避免同時改變太多流程</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>階段四　整合與常態化</h3>
+      <span class="when">長期，無強制時限</span>
+      <ul>
+        <li>逐步把各項小工具整合進統一、簡單的入口</li>
+        <li>建立簡單的內容更新與維護責任分工</li>
+      </ul>
+    </div>
+    <div class="tl-item">
+      <h3>階段五　視餘力升級</h3>
+      <span class="when">長期、非必要</span>
+      <ul>
+        <li>前面階段都穩定、寺方也有意願後，再考慮AI問答等進階功能</li>
+        <li>全程可以停留在任何一個階段，不必勉強往下走</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="benefit">
+  <div class="section-head">
+    <span class="section-num">七</span>
+    <h2>預期效益</h2>
+  </div>
+  <ul class="benefit-grid">
+    <li>遊客與信眾對佛法、寺院文化的理解更深入，弘法效果擴大</li>
+    <li>法師從重複性文書工作中釋出時間，投入更多結緣度眾</li>
+    <li>寺務運作更有條理，義工培育更系統化，逐步培養高素養的佛門工作人員</li>
+    <li>每一步投入都控制在低成本、易維護的範圍內，不給寺院增加負擔</li>
+  </ul>
+</section>
+
+<footer>
+  本頁為初步構想，後續將根據法師意見與寺方實際情況調整細化。
+</footer>
+
+</body>
+</html>
